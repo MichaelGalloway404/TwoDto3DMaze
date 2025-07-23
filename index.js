@@ -391,7 +391,7 @@ function makeMap(width, height){
     }
     return map;
 }
-map = makeMap(12,15);
+// map = makeMap(12,15);
 
 function update_display() {
     // for display mini map
