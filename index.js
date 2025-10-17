@@ -384,14 +384,97 @@ framesInRow = 2;
 let shadow_spritesheet = sprite_sheet(shadow_image, numFrames, framesInRow, 0, 0, frameWidth, frameHeight, 50, 50);
 let shadow_frame = 0;
 
+function getRandomInt(min, max) {
+  const minCeiled = Math.ceil(min);
+  const maxFloored = Math.floor(max);
+  return Math.floor(Math.random() * (maxFloored - minCeiled) + minCeiled); // The maximum is exclusive and the minimum is inclusive
+}
+
+let nodes = {}
+
+function getNeighbors(col,row){
+    let neighbors = [];
+    // down
+    if (col+2 < map.length && nodes[(col+2).toString()+row.toString()][2] == 'f'){
+        neighbors.push([col+2,row,'d']);
+    } 
+    // up
+    if (col-2 > 0 && nodes[(col-2).toString()+row.toString()][2] == 'f'){
+        neighbors.push([col-2,row,'u']);
+    } 
+    // right
+    if (row+2 < map.length && nodes[col.toString()+(row+2).toString()][2] == 'f'){
+        neighbors.push([col,row+2,'r']);
+    } 
+    // left
+    if (row-2 > 0 && nodes[col.toString()+(row-2).toString()][2] == 'f'){
+        neighbors.push([col,row-2,'l']);
+    } 
+    return neighbors;
+}
+
 function makeMap(width, height){
     let map = [];
     for(let i = 0; i < height; i++){
-        map[i] = Array(width).fill(0);
+        map[i] = Array(width).fill(1);
+    }
+    for(let i = 1; i < height; i += 2){
+        for(let j = 1; j < width; j += 2){
+            map[i][j] = 0;
+            nodes[i.toString()+j.toString()] = [i,j,'f'];
+
+
+            // let dir = getRandomInt(0,3);
+            // if (dir == 0){
+            //     map[i+1][j]=0;    
+            // }
+            // if (dir == 1){
+            //     map[i-1][j]=0;
+            // }
+            // if (dir == 2){
+            //     map[i][j+1]=0;
+            // }
+            // if (dir == 3){
+            //     map[i][j-1]=0;
+            // }
+        }
     }
     return map;
 }
-// map = makeMap(12,15);
+map = makeMap(11,11);
+
+function changeMap(map){
+    for(let i = 1; i < map.length; i += 2){
+        for(let j = 1; j < map.length; j += 2){
+            n = getNeighbors(i,j);
+            
+            if (n.length > 0){
+                num = getRandomInt(onabort,n.length);
+                path = n[num];
+                if(path[2] == 'd'){
+                    map[i+1][j]=0;
+                    nodes[i.toString()+j.toString()][2] = 't';
+                }
+                if(path[2] == 'u'){
+                    map[i-1][j]=0;
+                    nodes[i.toString()+j.toString()][2] = 't';
+                }
+                if(path[2] == 'r'){
+                    map[i][j+1]=0;
+                    nodes[i.toString()+j.toString()][2] = 't';
+                }
+                if(path[2] == 'l'){
+                    map[i][j-1]=0;
+                    nodes[i.toString()+j.toString()][2] = 't';
+                }
+            }
+            
+        }
+    }
+}
+changeMap(map);
+console.log(getNeighbors(1,1))
+// console.log(nodes['59'])
 
 function update_display() {
     // for display mini map
