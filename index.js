@@ -422,26 +422,19 @@ function makeMap(width, height){
         for(let j = 1; j < width; j += 2){
             map[i][j] = 0;
             nodes[i.toString()+j.toString()] = [i,j,'f'];
-
-
-            // let dir = getRandomInt(0,3);
-            // if (dir == 0){
-            //     map[i+1][j]=0;    
-            // }
-            // if (dir == 1){
-            //     map[i-1][j]=0;
-            // }
-            // if (dir == 2){
-            //     map[i][j+1]=0;
-            // }
-            // if (dir == 3){
-            //     map[i][j-1]=0;
-            // }
         }
     }
     return map;
 }
-map = makeMap(11,11);
+
+let w = 11;
+let h = 11;
+
+map = makeMap(w,h);
+
+// Set internal canvas size
+miniMapCanvas.width = w*25; 
+miniMapCanvas.height = h*25;
 
 function changeMap(map){
     for(let i = 1; i < map.length; i += 2){
@@ -449,7 +442,7 @@ function changeMap(map){
             n = getNeighbors(i,j);
             
             if (n.length > 0){
-                num = getRandomInt(onabort,n.length);
+                num = getRandomInt(0,n.length);
                 path = n[num];
                 if(path[2] == 'd'){
                     map[i+1][j]=0;
@@ -480,9 +473,9 @@ function update_display() {
     // for display mini map
     const miniMapCanvas = document.getElementById("miniMapCanvas");
 
-// Set internal canvas size
-miniMapCanvas.width = 400; 
-miniMapCanvas.height = 400;
+// // Set internal canvas size
+// miniMapCanvas.width = 900; 
+// miniMapCanvas.height = 900;
 
 const miniMap = miniMapCanvas.getContext("2d");
 

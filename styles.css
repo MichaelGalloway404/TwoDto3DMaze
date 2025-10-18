@@ -1,4 +1,7 @@
 .center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   text-align: center;
   border: solid 2px #08809e;
   background-color: rgb(12, 81, 95);
