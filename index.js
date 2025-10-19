@@ -427,8 +427,8 @@ function makeMap(width, height){
     return map;
 }
 
-let w = 11;
-let h = 11;
+let w = 15;
+let h = 15;
 
 map = makeMap(w,h);
 
@@ -466,8 +466,15 @@ function changeMap(map){
     }
 }
 changeMap(map);
-console.log(getNeighbors(1,1))
-// console.log(nodes['59'])
+
+for(let i = 1; i < map.length; i ++){
+    for(let j = 1; j < map.length; j ++){
+        let ran = getRandomInt(1,100);
+        if (ran > 90 && j < w){
+            map[i][j] = 0
+        }
+    }
+}
 
 function update_display() {
     // for display mini map
