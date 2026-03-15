@@ -374,16 +374,6 @@ framesInRow = 27;
 let view3D_spritesheet = sprite_sheet(view3D_image, numFrames, framesInRow, 0, 0, frameWidth, frameHeight, 50, 50);
 let view3D_frame = 0;
 
-// create 3D view of lines dipictiong motion
-const shadow_image = new Image();
-shadow_image.src = "./images/shadow-sheet.png";
-frameWidth = 194;  // width of a single frame
-frameHeight = 194; // height of a single frame
-numFrames = 2;    // total number of frames
-framesInRow = 2;
-let shadow_spritesheet = sprite_sheet(shadow_image, numFrames, framesInRow, 0, 0, frameWidth, frameHeight, 50, 50);
-let shadow_frame = 0;
-
 function getRandomInt(min, max) {
   const minCeiled = Math.ceil(min);
   const maxFloored = Math.floor(max);
@@ -521,15 +511,7 @@ const miniMap = miniMapCanvas.getContext("2d");
     view3D_frame = 0;
     drawWall(view3D_frame);
 
-    // rotates the images on floor to simulate movement
-    if(directionRotation % 2 == 0){
-        shadow_frame = 0;
-        drawWall(shadow_frame,shadow_spritesheet);
-    }
-    else{
-        shadow_frame = 1;
-        drawWall(shadow_frame,shadow_spritesheet);
-    }
+    
 
     // row 4 ---------------------------------------------------------------
     //  render back most wall infront of player
@@ -692,7 +674,6 @@ function loadImage(src) {
 Promise.all([
     loadImage("./images/arrow-sheet.png"),
     loadImage("./images/walls-sheet.png"),
-    loadImage("./images/shadow-sheet.png")
 ]).then(() => {
     console.log("All images loaded");
     // start displaying game when ready
